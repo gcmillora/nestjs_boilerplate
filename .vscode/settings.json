@@ -1,0 +1,8 @@
+{
+  "workbench.colorCustomizations": {
+    "titleBar.activeForeground": "#FFFFFF", // White text for active window - maximum contrast
+    "titleBar.inactiveForeground": "#B0B0B0", // Light gray for inactive text - still readable
+    "titleBar.activeBackground": "#007ACC", // VS Code blue for active window
+    "titleBar.inactiveBackground": "#3D3D3D" // Dark gray for inactive window
+  }
+}
