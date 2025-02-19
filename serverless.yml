@@ -1,0 +1,65 @@
+service: api
+
+frameworkVersion: '^4.0.0'
+configValidationMode: error
+
+custom:
+  prune:
+    automatic: true
+    number: 2
+  addHttpOffline:
+    dev: []
+    local:
+      - httpApi:
+          method: '*'
+          path: '/{proxy+}'
+    prod: []
+  esbuild:
+    config: './esbuild.config.js'
+  serverless-offline:
+    hooks:
+      'before:package:createDeploymentArtifacts':
+        - npx prisma generate
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: ap-southeast-1
+  stage: ${opt:stage, 'dev'}
+  deploymentMethod: direct
+  logRetentionInDays: 7
+  environment:
+    DATABASE_URL: ${env:DATABASE_URL}
+    GOOGLE_API_KEY: ${env:GOOGLE_API_KEY}
+    CLERK_ISSUER_URL: ${env:CLERK_ISSUER_URL}
+    CLERK_SECRET_KEY: ${env:CLERK_SECRET_KEY}
+    OPENAI_API_KEY: ${env:OPENAI_API_KEY}
+    LEMON_SQUEEZY_STORE_ID: ${env:LEMON_SQUEEZY_STORE_ID}
+    LEMON_SQUEEZY_API_KEY: ${env:LEMON_SQUEEZY_API_KEY}
+
+package:
+  individually: true
+  patterns:
+    - '!.git'
+    - '!.github'
+    - '!src/**'
+    - '!.gitignore'
+    - '!esbuild.config.js'
+    - '!nest-cli.json'
+    - '!package-lock.json'
+    - '!tsconfig*'
+    - 'node_modules/.prisma/client/**'
+    - '!node_modules/prisma/libquery_engine-*'
+    - '!node_modules/@prisma/engines/**'
+
+functions:
+  api:
+    handler: dist/src/main.handler
+    memorySize: 256
+    timeout: 20
+    url: true
+    events: ${self:custom.addHttpOffline.${param:stage, self:provider.stage}}
+
+plugins:
+  - serverless-offline
+  - serverless-prune-plugin

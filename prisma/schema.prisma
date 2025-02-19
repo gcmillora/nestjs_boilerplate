@@ -1,0 +1,20 @@
+// schema.prisma
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+model User {
+  id        String   @id @default(uuid())
+  uuid      String   @unique
+  email     String   @unique
+  roleId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
