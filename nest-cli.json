@@ -16,6 +16,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/users/tsconfig.lib.json"
       }
+    },
+    "payments": {
+      "type": "library",
+      "root": "libs/payments",
+      "entryFile": "index",
+      "sourceRoot": "libs/payments/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/payments/tsconfig.lib.json"
+      }
     }
   }
 }

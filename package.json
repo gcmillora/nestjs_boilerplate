@@ -97,7 +97,8 @@
       "<rootDir>/libs/"
     ],
     "moduleNameMapper": {
-      "^@app/users(|/.*)$": "<rootDir>/libs/users/src/$1"
+      "^@app/users(|/.*)$": "<rootDir>/libs/users/src/$1",
+      "^@app/payments(|/.*)$": "<rootDir>/libs/payments/src/$1"
     }
   }
 }

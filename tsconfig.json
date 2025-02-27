@@ -29,6 +29,12 @@
       ],
       "@app/users/*": [
         "libs/users/src/*"
+      ],
+      "@app/payments": [
+        "libs/payments/src"
+      ],
+      "@app/payments/*": [
+        "libs/payments/src/*"
       ]
     }
   }

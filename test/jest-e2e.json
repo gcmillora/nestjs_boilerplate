@@ -12,6 +12,8 @@
   },
   "moduleNameMapper": {
     "@app/users/(.*)": "<rootDir>/../libs/users/src/$1",
-    "@app/users": "<rootDir>/../libs/users/src"
+    "@app/users": "<rootDir>/../libs/users/src",
+    "@app/payments/(.*)": "<rootDir>/../libs/payments/src/$1",
+    "@app/payments": "<rootDir>/../libs/payments/src"
   }
 }
