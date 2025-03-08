@@ -4,6 +4,9 @@ import { Callback, Context, Handler } from 'aws-lambda';
 import { ValidationPipe } from '@nestjs/common/pipes';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import serverlessExpress from '@codegenie/serverless-express';
+import { Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { GlobalExceptionFilter } from './common/filters/global-exception.filter';
 
 // Create a Handler for  the server froom AWS Lambda
 let server: Handler;
@@ -22,6 +25,9 @@ const getApp = async () => {
   );
 
   app.enableCors({});
+
+  const configService = app.get(ConfigService);
+  app.useGlobalFilters(new GlobalExceptionFilter(configService));
 
   //Setup Swagger
   const config = new DocumentBuilder()
@@ -73,7 +79,9 @@ if (
 ) {
   getApp().then((app) => {
     app.listen(8000, () => {
-      console.log('Server is running on port 8000');
+      const logger = new Logger();
+
+      logger.log('Application server is running on port 8000');
     });
   });
 }

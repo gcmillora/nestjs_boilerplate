@@ -1,7 +1,5 @@
-import { UsersLibService } from '@app/users';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class PaymentsLibService {
@@ -9,11 +7,7 @@ export class PaymentsLibService {
   private readonly storeId: string;
   private readonly apiUrl = 'https://api.lemonsqueezy.com/v1/checkouts';
 
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly configService: ConfigService,
-    private readonly userLibService: UsersLibService,
-  ) {
+  constructor(private readonly configService: ConfigService) {
     this.apiKey = this.configService.get('LEMON_SQUEEZY_API_KEY');
     this.storeId = this.configService.get('LEMON_SQUEEZY_STORE_ID');
   }
